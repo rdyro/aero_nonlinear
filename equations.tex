@@ -1,0 +1,162 @@
+\documentclass[lettersize]{article}
+
+% EXTERNAL LIBRARIES ----------------------------------------------------------
+% document
+\usepackage[includeheadfoot, margin=0.8in]{geometry} % for margin adjustment
+\usepackage[utf8]{inputenc} % for UTF-8 input in the document
+\usepackage{parskip} % for no ident at the beginning of a paragraph
+\usepackage{titlesec} % for custom spacing between section headings and text
+\usepackage[fontsize=10]{scrextend} % for adjusting the font size
+% graphics
+\usepackage{graphicx} % for figures
+\usepackage{float} % for embedding figures in text
+\usepackage{caption} % for equations in captions (fractions specifically)
+% better environments
+\usepackage{amsmath} % for more equation symbols
+\usepackage{amssymb} % for more equation symbols
+\usepackage{fancyvrb} % for a better verbatim environment (Verbatim)
+\usepackage{enumitem} % for a better enumeration environment
+% tables
+\usepackage{multirow} % for multi-row tables
+\usepackage{siunitx} % for table floating point alignment in a column
+\usepackage{xcolor} % for colorful table cells
+\usepackage{units} % for colorful table cells
+% interactive document
+\usepackage{url} % for weblinks in text and clickable table of contents
+% code in the article
+\usepackage{algorithmicx} % for nice pseudocode
+\usepackage{listings} % for code listings
+\usepackage{color} % for custom color in code listings
+\usepackage{hyperref}
+% -----------------------------------------------------------------------------
+
+% FIGURE, TABLE, EQUATION CONFIG ----------------------------------------------
+\captionsetup[figure]{font=footnotesize}
+\captionsetup[table]{font=footnotesize}
+\numberwithin{equation}{section}
+% -----------------------------------------------------------------------------
+
+% LINE SPACING CONFIG ---------------------------------------------------------
+\setlist{nosep}
+\linespread{1.6} % double space, 1.3 is single space
+% -----------------------------------------------------------------------------
+
+% CODE LISTING CONFIG ---------------------------------------------------------
+\definecolor{mykeyword}{rgb}{0,0.6,0}
+\definecolor{mycomment}{rgb}{0,0.6,0.9}
+\definecolor{mynumber}{rgb}{0.5,0.5,0.5}
+\definecolor{mystring}{rgb}{1,0,0}
+
+\lstset{
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\tiny,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=t,                    % sets the caption-position to bottom
+  commentstyle=\color{mycomment},    % comment style
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{mykeyword},       % keyword style
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mynumber}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stringstyle=\color{mystring},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  %title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\lstdefinelanguage{Julia}%
+  {morekeywords={abstract,break,case,catch,const,continue,do,else,elseif,%
+      end,export,false,for,function,immutable,import,importall,if,in,%
+      macro,module,otherwise,quote,return,switch,true,try,type,typealias,%
+      using,while,mutable,struct},%
+   sensitive=true,%
+   alsoother={$},%
+   morecomment=[l]\#,%
+   morecomment=[n]{\#=}{=\#},%
+   morestring=[s]{"}{"},%
+   morestring=[m]{'}{'},%
+}[keywords,comments,strings]%
+
+\lstdefinelanguage{Maxima}{
+keywords={addrow,addcol,zeromatrix,ident,augcoefmatrix,ratsubst,diff,ev,tex,%
+with_stdout,nouns,express,depends,load,submatrix,div,grad,curl,%
+rootscontract,solve,part,assume,sqrt,integrate,abs,inf,exp},
+sensitive=true,
+%comment=[n][\itshape]{/*}{*/}
+comment=[s]{/*}{*/}
+}
+% -----------------------------------------------------------------------------
+
+% START OF ADDITIONAL MATH OPERATORS ------------------------------------------
+\DeclareMathOperator*{\minimize}{minimize}
+\DeclareMathOperator*{\st}{subject\;to}
+\DeclareMathOperator*{\sign}{\mathbf{sign}}
+\def\begm{\ensuremath\begin{bmatrix}}
+\def\endm{\ensuremath\end{bmatrix}}
+% END OF ADDITIONAL MATH OPERATORS --------------------------------------------
+
+% START OF BIBLIOGRAPHY CONFIG ------------------------------------------------
+\usepackage[superscript]{cite}
+\makeatletter 
+\renewcommand\@biblabel[1]{#1.} 
+\makeatother
+\let\oldthebibliography\thebibliography
+\let\endoldthebibliography\endthebibliography
+\renewenvironment{thebibliography}[1]{
+ \begin{oldthebibliography}{#1}
+ \setlength{\itemsep}{0em}
+ \setlength{\parskip}{0em}
+}
+{
+ \end{oldthebibliography}
+}
+\renewcommand\refname{\hfil References}
+\bibliographystyle{naturemag}
+% -----------------------------------------------------------------------------
+
+% TITLE PAGE CONFIG -----------------------------------------------------------
+\title{}
+\author{}
+\date{\today}
+\titlespacing{\section}{0pt}{0pt}{0pt}
+\titlespacing{\subsection}{0pt}{0pt}{0pt}
+\titlespacing{\subsubsection}{0pt}{0pt}{0pt}
+% -----------------------------------------------------------------------------
+
+
+% START OF DOCUMENT -----------------------------------------------------------
+\begin{document}
+%\clearpage\maketitle
+%\tableofcontents
+%\newpage
+\begin{align*}
+\begin{bmatrix}
+x(t+1) \\
+y(t+1) \\
+v_x(t+1) \\
+v_y(t+1) \\
+\theta(t+1)
+\end{bmatrix} = \begin{bmatrix}
+x(t) + v_x \Delta t \\
+y(t) + v_y \Delta t \\
+v_x(t) + \left(\sign(v_x) v_x^2 \left(L \sin(\theta) + D \cos(\theta)\right)
+u_1^n \cos(\theta)\right)\frac{\Delta t}{m} \\
+v_y(t) + \left(v_y^2 \left(L \cos(\theta) - D \sin(\theta)\right)
+u_1^n \sin(\theta)\right)\frac{\Delta t}{m} - g\\
+\theta(t) + u_2 \frac{1 + \lambda u_2}{I_z}
+\end{bmatrix}
+\end{align*}
+\[ D = \frac{1}{2} \rho A \left( 3.1 \text{AoA}^2 + 0.025 \text{AoA} +
+0.02\right) \]
+\[ L = \sign(\text{AoA})\frac{1}{2} \rho A \left( -61.37 \text{AoA}^4 + 15.761
+\left|\text{AoA}\right|^3 + 0.7201 \text{AoA}^2 + 3.6125 \left| \text{AoA}
+\right|\right) \]
+
+
+%\bibliography{biblio}{}
+\end{document}
